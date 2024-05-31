@@ -61,7 +61,7 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 @st.cache_resource
 def load_model():
-    model_path = os.path.join(os.getcwd(), 'productosa.h5')
+    model_path = os.path.join(os.getcwd(), 'products.h5')
     model = tf.keras.models.load_model(model_path)
     return model
 
@@ -147,7 +147,7 @@ with tab1:
         audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
         st.markdown(audio_html, unsafe_allow_html=True)
 
-    class_names = open("./clases (1).txt", "r").readlines()
+    class_names = open("./clases (2).txt", "r").readlines()
 
     option = st.selectbox(
         "¿Qué te gustaría usar para subir la foto?",
