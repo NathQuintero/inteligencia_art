@@ -167,22 +167,20 @@ option = st.selectbox(
 
 img_file_buffer = None
 
+# Reproducir el audio según la opción seleccionada
+mp3_tp = generar_tipo(option)
+reproducir_audio(mp3_tp)
+
 if option == "Tomar foto":
     # Opción para capturar una imagen desde la cámara
-    mp3_tp = generar_tipo(option)
-    reproducir_audio(mp3_tp)
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
 elif option == "Subir archivo":
-    mp3_tp = generar_tipo(option)
-    reproducir_audio(mp3_tp)
     # Opción para cargar una imagen desde un archivo local
     if img_file_buffer is None:
         img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
 
 elif option == "URL":
-    mp3_tp = generar_tipo(option)
-    reproducir_audio(mp3_tp)
     # Opción para cargar una imagen desde una URL
     if img_file_buffer is None:
         image_url = st.text_input("O ingrese la URL de la imagen")
