@@ -167,11 +167,12 @@ option = st.selectbox(
 
 img_file_buffer = None
 
-# Reproducir el audio según la opción seleccionada
-mp3_tp = generar_tipo(option)
-reproducir_audio(mp3_fp)
+
 
 if option == "Tomar foto":
+    # Reproducir el audio según la opción seleccionada
+    mp3_tp = generar_tipo(option)
+    reproducir_audio(mp3_fp)
     # Opción para capturar una imagen desde la cámara
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
