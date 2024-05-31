@@ -77,18 +77,6 @@ def generar_saludo():
     mp3_fp.seek(0)
     return mp3_fp
 
-def generar_tipo():
-    if option == "Tomar foto":
-        texto = "has seleccionado Tomar foto"
-    elif option == "Subir archivo":
-        texto = "has seleccionado Subir archivo"
-    elif option == "URL":
-        texto = "has seleccionado URL"
-    tts = gTTS(text=texto, lang='es')
-    mp3_fp = BytesIO()
-    tts.write_to_fp(mp3_fp)
-    mp3_fp.seek(0)
-    return mp3_fp
 
 def reproducir_audio(mp3_fp):
     try:
@@ -171,8 +159,6 @@ img_file_buffer = None
 
 if option == "Tomar foto":
     # Reproducir el audio según la opción seleccionada
-    mp3_tp = generar_tipo(option)
-    reproducir_audio(mp3_fp)
     # Opción para capturar una imagen desde la cámara
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
