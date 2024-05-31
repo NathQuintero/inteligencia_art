@@ -122,15 +122,17 @@ elif option == "Subir archivo":
     if img_file_buffer is None:
         img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
 
-# Opción para cargar una imagen desde una URL
-if img_file_buffer is None:
-    image_url = st.text_input("O ingrese la URL de la imagen")
-    if image_url:
-        try:
-            response = requests.get(image_url)
-            img_file_buffer = BytesIO(response.content)
-        except Exception as e:
-            st.error(f"Error al cargar la imagen desde la URL: {e}")
+elif option == "URL":
+    # Opción para cargar una imagen desde una URL
+    if img_file_buffer is None:
+        image_url = st.text_input("O ingrese la URL de la imagen")
+        if image_url:
+            try:
+                response = requests.get(image_url)
+                img_file_buffer = BytesIO(response.content)
+            except Exception as e:
+                st.error(f"Error al cargar la imagen desde la URL: {e}")
+
 
 # Procesar la imagen y realizar la predicción
 if img_file_buffer:
