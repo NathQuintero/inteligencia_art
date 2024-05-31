@@ -117,9 +117,10 @@ if option == "Tomar foto":
     # Opción para capturar una imagen desde la cámara
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
-# Opción para cargar una imagen desde un archivo local
-if img_file_buffer is None:
-    img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
+elif option == "Subir archivo":
+    # Opción para cargar una imagen desde un archivo local
+    if img_file_buffer is None:
+        img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
 
 # Opción para cargar una imagen desde una URL
 if img_file_buffer is None:
