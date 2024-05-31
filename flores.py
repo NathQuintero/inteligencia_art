@@ -91,10 +91,27 @@ mp3_fp = generar_saludo()
 reproducir_audio(mp3_fp)
 
 with st.sidebar:
-    st.video("https://www.youtube.com/watch?v=xxUHCtHnVk8")
-    st.title("Reconocimiento de imagen")
-    st.subheader("Reconocimiento de imagen para productos")
+
     confianza = st.slider("Seleccione el nivel de Confianza", 0, 100, 50) / 100
+    st.markdown("¿Cómo poner el producto correctamente en la cámara?") 
+
+    # Ruta del archivo de video
+    video_file_path = './videos/SI.mp4'
+    try:
+        with open(video_file_path, 'rb') as video_file:
+            video_bytes = video_file.read()
+        st.video(video_bytes)
+    except FileNotFoundError:
+        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
+
+    # Ruta del archivo de video
+    video_file_path = './videos/NO.mp4'
+    try:
+        with open(video_file_path, 'rb') as video_file:
+            video_bytes = video_file.read()
+        st.video(video_bytes)
+    except FileNotFoundError:
+        st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
 
 st.image('productose.jpg')
 st.title("Modelo de Identificación de Imagenes")
