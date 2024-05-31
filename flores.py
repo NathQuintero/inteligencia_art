@@ -211,7 +211,7 @@ with tab1:
         
 with tab2:
     with st.container( border=True):
-        st.subheader("Modelo Machine Learning para predecir la deserción de clientes")
+        st.subheader("Asistente de Identificación de Productos para Personas con Baja Visión mediante Redes Neuronales")
         #Se desea usar emoji lo puedes buscar aqui.
         st.write("""Realizado por Keren Nathalia Quintero &
                     Angely Gabriela Cristancho:\U0001F33B\U0001F42C:""")
@@ -232,18 +232,24 @@ Procesamiento de la Imagen:
 
 Una vez que la imagen es subida, el sistema la procesa y ajusta para que sea compatible con el modelo de predicción.
 La imagen es convertida a formato RGB y redimensionada a las dimensiones requeridas por el modelo.
+
 Modelo de Predicción:
 
 Utilizamos un modelo de predicción de productos basado en redes neuronales profundas. Este modelo ha sido entrenado para reconocer una variedad de productos con alta precisión.
 El modelo analiza la imagen y proporciona una predicción del tipo de producto, junto con una puntuación de confianza.
+
 Retroalimentación Auditiva:
 
 Además de mostrar los resultados en pantalla, el sistema genera un mensaje de audio que describe el producto identificado. Esta característica es crucial para usuarios con discapacidad visual, ya que les proporciona información auditiva sobre el producto.
 El sistema también proporciona retroalimentación auditiva cuando se selecciona una opción de entrada (como tomar una foto o subir un archivo), asegurando una experiencia de usuario accesible y fluida.
+
 Beneficios
 Accesibilidad: Este sistema mejora significativamente la accesibilidad para personas con baja visión, permitiéndoles identificar productos de manera independiente.
+
 Conveniencia: La posibilidad de utilizar diferentes métodos para subir imágenes ofrece flexibilidad y comodidad a los usuarios.
+
 Tecnología Avanzada: La utilización de redes neuronales profundas para el reconocimiento de imágenes garantiza un alto nivel de precisión en la identificación de productos.
+
 Interfaz Amigable: La interfaz simple y las instrucciones claras hacen que la aplicación sea fácil de usar para personas de todas las edades y habilidades tecnológicas.
 
 """)
