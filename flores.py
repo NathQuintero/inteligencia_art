@@ -77,6 +77,14 @@ def generar_saludo():
     mp3_fp.seek(0)
     return mp3_fp
 
+def generar_tipo(option):
+    texto = f"Has seleccionado {option}"
+    tts = gTTS(text=texto, lang='es')
+    mp3_fp = BytesIO()
+    tts.write_to_fp(mp3_fp)
+    mp3_fp.seek(0)
+    return mp3_fp
+
 
 def reproducir_audio(mp3_fp):
     try:
@@ -153,9 +161,11 @@ option = st.selectbox(
     placeholder="Selecciona cómo subir la foto"
 )
 
+# Generar y reproducir audio según la opción seleccionada
+mp3_tp = generar_tipo(option)
+reproducir_audio(mp3_tp)
+
 img_file_buffer = None
-
-
 
 if option == "Tomar foto":
     # Reproducir el audio según la opción seleccionada
