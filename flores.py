@@ -217,23 +217,34 @@ with tab2:
                     Angely Gabriela Cristancho:\U0001F33B\U0001F42C:""")
         st.write("""
 
-**Introducción: ** 
-cliente de nuestros sueños es el que permanece fiel a la empresa, comprando siempre sus productos o servicios. Sin embargo, en la realidad, 
-los clientes a veces deciden alejarse de la empresa para probar o empezar a comprar otros productos o servicios y esto puede ocurrir en 
-cualquier fase del customer journey. Sin embargo, existen varias medidas para prevenir o gestionar mejor esta circunstancia. Por eso lo mejor
-es tener una herramienta predictiva que nos indique el estado futuro de dichos clientes usando inteligencia artificial, tomar las acciones 
-de retenció necesaria. Constituye pues esta aplicación una herramienta importante para la gestión del marketing.
+Propósito del Proyecto
+El objetivo principal de este proyecto es asistir a personas con baja visión en la identificación de productos de manera autónoma y eficiente. Muchas veces, las personas con discapacidad visual se enfrentan a desafíos significativos al intentar reconocer productos en su entorno diario. Este proyecto utiliza tecnología avanzada de reconocimiento de imágenes para proporcionar una solución práctica y accesible a este problema.
 
-Los datos fueron tomados con la Información de la base de datos CRM de la empresa ubicada en Bucaramanfa,donde se
-preparó 3 modelos de machine Learnig para predecir la deserció de clientes, tanto actuales como nuevos.
+Descripción del Proyecto
+Este sistema está diseñado para funcionar como un asistente personal que puede identificar productos a través de una cámara. La aplicación permite a los usuarios tomar una foto del producto, subir una imagen desde su dispositivo o ingresar una URL de la imagen del producto. Una vez que la imagen es proporcionada, el sistema utiliza un modelo de predicción basado en redes neuronales para identificar el producto y proporcionar una descripción de este.
 
-Datos Actualizados en la fuente: 20 de Marzo del 2024
+Cómo Funciona
+Interfaz de Usuario:
 
+La aplicación ofrece una interfaz sencilla e intuitiva donde los usuarios pueden seleccionar cómo desean subir la imagen del producto.
+Se proporcionan opciones para tomar una foto con la cámara, cargar una imagen desde un archivo local o ingresar la URL de una imagen.
+Procesamiento de la Imagen:
 
-Se utilizó modelos supervidados de clasificacion  tanto Naive Bayes, Arboles de decisión y Bosques Aleatorios 
-entendiendo que hay otras técnicas, es el resultado de la aplicacion practico del curso de inteligencia artificial en estos modelos
-revisado en clase. Aunqe la aplicación final sería un solo modelo, aqui se muestran los tres modelos para 
-comparar los resultados.
+Una vez que la imagen es subida, el sistema la procesa y ajusta para que sea compatible con el modelo de predicción.
+La imagen es convertida a formato RGB y redimensionada a las dimensiones requeridas por el modelo.
+Modelo de Predicción:
+
+Utilizamos un modelo de predicción de productos basado en redes neuronales profundas. Este modelo ha sido entrenado para reconocer una variedad de productos con alta precisión.
+El modelo analiza la imagen y proporciona una predicción del tipo de producto, junto con una puntuación de confianza.
+Retroalimentación Auditiva:
+
+Además de mostrar los resultados en pantalla, el sistema genera un mensaje de audio que describe el producto identificado. Esta característica es crucial para usuarios con discapacidad visual, ya que les proporciona información auditiva sobre el producto.
+El sistema también proporciona retroalimentación auditiva cuando se selecciona una opción de entrada (como tomar una foto o subir un archivo), asegurando una experiencia de usuario accesible y fluida.
+Beneficios
+Accesibilidad: Este sistema mejora significativamente la accesibilidad para personas con baja visión, permitiéndoles identificar productos de manera independiente.
+Conveniencia: La posibilidad de utilizar diferentes métodos para subir imágenes ofrece flexibilidad y comodidad a los usuarios.
+Tecnología Avanzada: La utilización de redes neuronales profundas para el reconocimiento de imágenes garantiza un alto nivel de precisión en la identificación de productos.
+Interfaz Amigable: La interfaz simple y las instrucciones claras hacen que la aplicación sea fácil de usar para personas de todas las edades y habilidades tecnológicas.
 
 """)
     with st.container(border=True,height=250):
