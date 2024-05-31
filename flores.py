@@ -255,8 +255,8 @@ Interfaz Amigable: La interfaz simple y las instrucciones claras hacen que la ap
 """)
     with st.container(border=True,height=250):
         st.subheader("Detalles")
-        st.write(""" Este es un ejemplo de despliegue de los modelos de Machine Learning entrenados en
-                Google Colab con las librerias de scikit-learn par Naive Bayes, Arbles de Decisión y Bosques Aleatorios.
+        st.write(""" Este es un ejemplo de despliegue de los modelos de redes neuronales entrenados en
+                Google Colab.
                 En este notebook podrás verificar el preprocesamiento del dataset y el entrenamiento y las pruebas
                 y scores obtenidos.
                 https://colab.research.google.com/drive/1Lth_RqbnAnBVAMjSWinpXoTitI9OPaIv""")
