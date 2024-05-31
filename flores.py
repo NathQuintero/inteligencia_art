@@ -111,6 +111,8 @@ option = st.selectbox(
     placeholder="Selecciona cómo subir la foto"
 )
 
+img_file_buffer = None
+
 # Opción para capturar una imagen desde la cámara
 img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
