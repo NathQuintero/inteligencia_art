@@ -113,13 +113,9 @@ with st.sidebar:
     except FileNotFoundError:
         st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
 
-st.image('productose.jpg')
-st.title("Modelo de Identificación de Imagenes")
-st.write("Desarrollo Proyecto Final de Inteligencia Artificial : Aplicando modelos de Redes Convolucionales e Imagenes")
-st.write("""
-         # Detección de Productos
-         """
-         )
+# Título de la página
+st.image("./videos/banner.png", use_column_width=True)
+st.write("# Detección de Productos")
 
 def import_and_predict(image_data, model, class_names):
     if image_data.mode != 'RGB':
