@@ -77,6 +77,19 @@ def generar_saludo():
     mp3_fp.seek(0)
     return mp3_fp
 
+def generar_tipo():
+    if option == "Tomar foto":
+        texto = "has seleccionado Tomar foto"
+    elif option == "Subir archivo":
+        texto = "has seleccionado Subir archivo"
+    elif option == "URL":
+        texto = "has seleccionado URL"
+    tts = gTTS(text=texto, lang='es')
+    mp3_tp = BytesIO()
+    tts.write_to_fp(mp3_fp)
+    mp3_fp.seek(0)
+    return mp3_fp
+
 def reproducir_audio(mp3_fp):
     try:
         audio_bytes = mp3_fp.read()
@@ -154,16 +167,23 @@ option = st.selectbox(
 
 img_file_buffer = None
 
+# Reproducir el saludo al inicio
+mp3_tp = generar_tipo()
+
+
 if option == "Tomar foto":
     # Opción para capturar una imagen desde la cámara
+    reproducir_audio(mp3_tp)
     img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
 elif option == "Subir archivo":
+    reproducir_audio(mp3_tp)
     # Opción para cargar una imagen desde un archivo local
     if img_file_buffer is None:
         img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
 
 elif option == "URL":
+    reproducir_audio(mp3_tp)
     # Opción para cargar una imagen desde una URL
     if img_file_buffer is None:
         image_url = st.text_input("O ingrese la URL de la imagen")
