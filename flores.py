@@ -39,10 +39,16 @@ import base64
 
 warnings.filterwarnings("ignore")
 
+# Configuración de la página
 st.set_page_config(
-    page_title="Reconocimiento de Productos",
-    page_icon=":smile:",
-    initial_sidebar_state='auto'
+    page_title="¿Qué producto es?",
+    page_icon="icono.ico",
+    initial_sidebar_state='auto',
+    menu_items={
+        'Report a bug': 'http://www.unab.edu.co',
+        'Get Help': "https://docs.streamlit.io/get-started/fundamentals/main-concepts",
+        'About': "Nathalia Quintero & Angelly Cristancho. Inteligencia Artificial *Ejemplo de clase* Ingeniería de sistemas!"
+    }
 )
 
 hide_streamlit_style = """
@@ -61,6 +67,28 @@ def load_model():
 
 with st.spinner('Modelo está cargando..'):
     model = load_model()
+    
+# Generar saludo
+def generar_saludo():
+    texto = "¡Hola! soy Beimax, tu asistente neuronal personal, ¿cómo te sientes hoy?"
+    tts = gTTS(text=texto, lang='es')
+    mp3_fp = BytesIO()
+    tts.write_to_fp(mp3_fp)
+    mp3_fp.seek(0)
+    return mp3_fp
+
+def reproducir_audio(mp3_fp):
+    try:
+        audio_bytes = mp3_fp.read()
+        audio_base64 = base64.b64encode(audio_bytes).decode()
+        audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
+        st.markdown(audio_html, unsafe_allow_html=True)
+    except Exception as e:
+        st.error(f"Error al reproducir el audio: {e}")
+
+# Reproducir el saludo al inicio
+mp3_fp = generar_saludo()
+reproducir_audio(mp3_fp)
 
 with st.sidebar:
     st.video("https://www.youtube.com/watch?v=xxUHCtHnVk8")
