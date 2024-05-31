@@ -104,9 +104,19 @@ def reproducir_audio(mp3_fp):
 
 class_names = open("./clases (1).txt", "r").readlines()
 
+option = st.selectbox(
+    "¿Qué te gustaría usar para subir la foto?",
+    ("Tomar foto", "Subir archivo", "URL"),
+    index=None,
+    placeholder="Selecciona cómo subir la foto"
+)
+
 # Opción para capturar una imagen desde la cámara
 img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
+# Opción para cargar una imagen desde un archivo local
+if img_file_buffer is None:
+    img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
 
 # Opción para cargar una imagen desde una URL
 if img_file_buffer is None:
