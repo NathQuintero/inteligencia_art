@@ -113,8 +113,9 @@ option = st.selectbox(
 
 img_file_buffer = None
 
-# Opción para capturar una imagen desde la cámara
-img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
+if option == "Tomar foto":
+    # Opción para capturar una imagen desde la cámara
+    img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
 # Opción para cargar una imagen desde un archivo local
 if img_file_buffer is None:
