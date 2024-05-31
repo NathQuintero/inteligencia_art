@@ -85,7 +85,7 @@ def generar_tipo():
     elif option == "URL":
         texto = "has seleccionado URL"
     tts = gTTS(text=texto, lang='es')
-    mp3_tp = BytesIO()
+    mp3_fp = BytesIO()
     tts.write_to_fp(mp3_fp)
     mp3_fp.seek(0)
     return mp3_fp
@@ -169,7 +169,7 @@ img_file_buffer = None
 
 # Reproducir el audio según la opción seleccionada
 mp3_tp = generar_tipo(option)
-reproducir_audio(mp3_tp)
+reproducir_audio(mp3_fp)
 
 if option == "Tomar foto":
     # Opción para capturar una imagen desde la cámara
