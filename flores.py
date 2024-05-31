@@ -77,15 +77,6 @@ def generar_saludo():
     mp3_fp.seek(0)
     return mp3_fp
 
-def generar_tipo(option):
-    texto = f"Has seleccionado {option}"
-    tts = gTTS(text=texto, lang='es')
-    mp3_fp = BytesIO()
-    tts.write_to_fp(mp3_fp)
-    mp3_fp.seek(0)
-    return mp3_fp
-
-
 def reproducir_audio(mp3_fp):
     try:
         audio_bytes = mp3_fp.read()
@@ -121,99 +112,135 @@ with st.sidebar:
         st.video(video_bytes)
     except FileNotFoundError:
         st.error(f"El archivo de video no se encontró en la ruta: {video_file_path}")
-
-# Título de la página
-st.image("./videos/banner.png", use_column_width=True)
-st.write("# Detección de Productos")
-
-def import_and_predict(image_data, model, class_names):
-    if image_data.mode != 'RGB':
-        image_data = image_data.convert('RGB')
         
-    image_data = image_data.resize((180, 180))
-    image = tf.keras.utils.img_to_array(image_data)
-    image = tf.expand_dims(image, 0)  # Create a batch
-    prediction = model.predict(image)
-    index = np.argmax(prediction)
-    score = tf.nn.softmax(prediction[0])
-    class_name = class_names[index].strip()
-    return class_name, score
+tab1, tab2 = st.tabs(["Prediccion de productos", "Introducción"])
 
-def generar_audio(texto):
-    tts = gTTS(text=texto, lang='es')
-    mp3_fp = BytesIO()
-    tts.write_to_fp(mp3_fp)
-    mp3_fp.seek(0)
-    return mp3_fp
+with tab1:
 
-def reproducir_audio(mp3_fp):
-    audio_bytes = mp3_fp.read()
-    audio_base64 = base64.b64encode(audio_bytes).decode()
-    audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
-    st.markdown(audio_html, unsafe_allow_html=True)
+    # Título de la página
+    st.image("./videos/banner.png", use_column_width=True)
+    st.write("# Detección de Productos")
 
-class_names = open("./clases (1).txt", "r").readlines()
+    def import_and_predict(image_data, model, class_names):
+        if image_data.mode != 'RGB':
+            image_data = image_data.convert('RGB')
+            
+        image_data = image_data.resize((180, 180))
+        image = tf.keras.utils.img_to_array(image_data)
+        image = tf.expand_dims(image, 0)  # Create a batch
+        prediction = model.predict(image)
+        index = np.argmax(prediction)
+        score = tf.nn.softmax(prediction[0])
+        class_name = class_names[index].strip()
+        return class_name, score
 
-option = st.selectbox(
-    "¿Qué te gustaría usar para subir la foto?",
-    ("Tomar foto", "Subir archivo", "URL"),
-    index=None,
-    placeholder="Selecciona cómo subir la foto"
-)
+    def generar_audio(texto):
+        tts = gTTS(text=texto, lang='es')
+        mp3_fp = BytesIO()
+        tts.write_to_fp(mp3_fp)
+        mp3_fp.seek(0)
+        return mp3_fp
 
-# Generar y reproducir audio según la opción seleccionada
-mp3_tp = generar_tipo(option)
-reproducir_audio(mp3_tp)
+    def reproducir_audio(mp3_fp):
+        audio_bytes = mp3_fp.read()
+        audio_base64 = base64.b64encode(audio_bytes).decode()
+        audio_html = f'<audio autoplay="true"><source src="data:audio/mp3;base64,{audio_base64}" type="audio/mp3"></audio>'
+        st.markdown(audio_html, unsafe_allow_html=True)
 
-img_file_buffer = None
+    class_names = open("./clases (1).txt", "r").readlines()
 
-if option == "Tomar foto":
-    # Reproducir el audio según la opción seleccionada
-    # Opción para capturar una imagen desde la cámara
-    img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
-
-elif option == "Subir archivo":
-    # Opción para cargar una imagen desde un archivo local
-    if img_file_buffer is None:
-        img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
-
-elif option == "URL":
-    # Opción para cargar una imagen desde una URL
-    if img_file_buffer is None:
-        image_url = st.text_input("O ingrese la URL de la imagen")
-        if image_url:
-            try:
-                response = requests.get(image_url)
-                img_file_buffer = BytesIO(response.content)
-            except Exception as e:
-                st.error(f"Error al cargar la imagen desde la URL: {e}")
+    option = st.selectbox(
+        "¿Qué te gustaría usar para subir la foto?",
+        ("Tomar foto", "Subir archivo", "URL"),
+        index=None,
+        placeholder="Selecciona cómo subir la foto"
+    )
 
 
-# Procesar la imagen y realizar la predicción
-if img_file_buffer:
-    try:
-        image = Image.open(img_file_buffer)
-        st.image(image, use_column_width=True)
+    img_file_buffer = None
 
-        # Realizar la predicción
-        class_name, score = import_and_predict(image, model, class_names)
-        max_score = np.max(score)
+    if option == "Tomar foto":
+        # Reproducir el audio según la opción seleccionada
+        # Opción para capturar una imagen desde la cámara
+        img_file_buffer = st.camera_input("Capture una foto para identificar el producto")
 
-        # Mostrar el resultado y generar audio
-        if max_score > confianza:
-            resultado = f"Tipo de Producto: {class_name}\nPuntuación de confianza: {100 * max_score:.2f}%"
-            st.subheader(f"Tipo de Producto: {class_name}")
-            st.text(f"Puntuación de confianza: {100 * max_score:.2f}%")
-        else:
-            resultado = "No se pudo determinar el tipo de producto"
-            st.text(resultado)
+    elif option == "Subir archivo":
+        # Opción para cargar una imagen desde un archivo local
+        if img_file_buffer is None:
+            img_file_buffer = st.file_uploader("Cargar imagen desde archivo", type=["jpg", "jpeg", "png"])
 
-        # Generar y reproducir el audio
-        mp3_fp = generar_audio(resultado)
-        reproducir_audio(mp3_fp)
+    elif option == "URL":
+        # Opción para cargar una imagen desde una URL
+        if img_file_buffer is None:
+            image_url = st.text_input("O ingrese la URL de la imagen")
+            if image_url:
+                try:
+                    response = requests.get(image_url)
+                    img_file_buffer = BytesIO(response.content)
+                except Exception as e:
+                    st.error(f"Error al cargar la imagen desde la URL: {e}")
+
+
+    # Procesar la imagen y realizar la predicción
+    if img_file_buffer:
+        try:
+            image = Image.open(img_file_buffer)
+            st.image(image, use_column_width=True)
+
+            # Realizar la predicción
+            class_name, score = import_and_predict(image, model, class_names)
+            max_score = np.max(score)
+
+            # Mostrar el resultado y generar audio
+            if max_score > confianza:
+                resultado = f"Tipo de Producto: {class_name}\nPuntuación de confianza: {100 * max_score:.2f}%"
+                st.subheader(f"Tipo de Producto: {class_name}")
+                st.text(f"Puntuación de confianza: {100 * max_score:.2f}%")
+            else:
+                resultado = "No se pudo determinar el tipo de producto"
+                st.text(resultado)
+
+            # Generar y reproducir el audio
+            mp3_fp = generar_audio(resultado)
+            reproducir_audio(mp3_fp)
+            
+        except Exception as e:
+            st.error(f"Error al procesar la imagen: {e}")
+    else:
+        st.text("Por favor, cargue una imagen usando una de las opciones anteriores.")
         
-    except Exception as e:
-        st.error(f"Error al procesar la imagen: {e}")
-else:
-    st.text("Por favor, cargue una imagen usando una de las opciones anteriores.")
+with tab2:
+    with st.container( border=True):
+        st.subheader("Modelo Machine Learning para predecir la deserción de clientes")
+        #Se desea usar emoji lo puedes buscar aqui.
+        st.write("""Realizado por Keren Nathalia Quintero &
+                    Angely Gabriela Cristancho:\U0001F33B\U0001F42C:""")
+        st.write("""
+
+**Introducción: ** 
+cliente de nuestros sueños es el que permanece fiel a la empresa, comprando siempre sus productos o servicios. Sin embargo, en la realidad, 
+los clientes a veces deciden alejarse de la empresa para probar o empezar a comprar otros productos o servicios y esto puede ocurrir en 
+cualquier fase del customer journey. Sin embargo, existen varias medidas para prevenir o gestionar mejor esta circunstancia. Por eso lo mejor
+es tener una herramienta predictiva que nos indique el estado futuro de dichos clientes usando inteligencia artificial, tomar las acciones 
+de retenció necesaria. Constituye pues esta aplicación una herramienta importante para la gestión del marketing.
+
+Los datos fueron tomados con la Información de la base de datos CRM de la empresa ubicada en Bucaramanfa,donde se
+preparó 3 modelos de machine Learnig para predecir la deserció de clientes, tanto actuales como nuevos.
+
+Datos Actualizados en la fuente: 20 de Marzo del 2024
+
+
+Se utilizó modelos supervidados de clasificacion  tanto Naive Bayes, Arboles de decisión y Bosques Aleatorios 
+entendiendo que hay otras técnicas, es el resultado de la aplicacion practico del curso de inteligencia artificial en estos modelos
+revisado en clase. Aunqe la aplicación final sería un solo modelo, aqui se muestran los tres modelos para 
+comparar los resultados.
+
+""")
+    with st.container(border=True,height=250):
+        st.subheader("Detalles")
+        st.write(""" Este es un ejemplo de despliegue de los modelos de Machine Learning entrenados en
+                Google Colab con las librerias de scikit-learn par Naive Bayes, Arbles de Decisión y Bosques Aleatorios.
+                En este notebook podrás verificar el preprocesamiento del dataset y el entrenamiento y las pruebas
+                y scores obtenidos.
+                https://colab.research.google.com/drive/1Lth_RqbnAnBVAMjSWinpXoTitI9OPaIv""")
 
